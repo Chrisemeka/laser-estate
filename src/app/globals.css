@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+html, body {
+  background-color: theme("colors.ivory.DEFAULT");
+  color: theme("colors.ink.DEFAULT");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Utility: hairline gold divider */
+.hairline {
+  background: linear-gradient(90deg, transparent, theme("colors.gold.DEFAULT") 20%, theme("colors.gold.DEFAULT") 80%, transparent);
+  height: 1px;
+}
+
+/* Eyebrow small caps label */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: theme("colors.ink.muted");
+}
+
+/* Number rendering for prices */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Leaflet CSS is loaded via CDN in layout.
+   No overrides here — MapContainer sets its own inline size so Leaflet can
+   measure the container correctly on mount. */
