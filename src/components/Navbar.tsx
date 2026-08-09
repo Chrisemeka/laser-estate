@@ -8,7 +8,8 @@ export async function Navbar() {
   let isAdmin = false;
   if (user) {
     const { data } = await supabase.from("profiles").select("role").eq("id", user.id).single();
-    isAdmin = data?.role === "admin";
+    const profile = data as { role: string } | null;
+    isAdmin = profile?.role === "admin";
   }
 
   return (

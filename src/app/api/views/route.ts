@@ -23,7 +23,8 @@ export async function POST(req: Request) {
   const supabase = await createSupabaseServer();
   const { data: { user } } = await supabase.auth.getUser();
   if (user) {
-    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    const { data } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    const profile = data as { role: string } | null;
     if (profile?.role === "admin") return NextResponse.json({ ok: true, skipped: "admin" });
   }
 

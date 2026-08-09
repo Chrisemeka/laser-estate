@@ -11,7 +11,8 @@ async function assertAdmin() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("unauth");
   const { data } = await supabase.from("profiles").select("role").eq("id", user.id).single();
-  if (data?.role !== "admin") throw new Error("forbidden");
+  const profile = data as { role: string } | null;
+  if (profile?.role !== "admin") throw new Error("forbidden");
   return { supabase, userId: user.id };
 }
 
