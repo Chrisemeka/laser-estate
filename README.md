@@ -26,7 +26,7 @@ A real-estate platform for **Laser Estate Services** (Lagos, Nigeria), specialis
 
 ---
 
-## 1 · Create accounts (all free)
+<!-- ## 1 · Create accounts (all free)
 
 ### Supabase
 1. Go to https://supabase.com → **Sign up** with GitHub.
@@ -211,4 +211,4 @@ laser-estate/
 ## Sources
 
 - Realtor branding, address, and contacts extracted from the uploaded offer letter.
-- Sample listings in `supabase/seed.sql` are fictional; replace with real inventory.
+- Sample listings in `supabase/seed.sql` are fictional; replace with real inventory. -->

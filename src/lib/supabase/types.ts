@@ -76,31 +76,56 @@ export interface PropertyWithMedia extends Property {
   media: Media[];
 }
 
-// Minimal Database shape for the Supabase clients. Regenerate for full type safety.
+/**
+ * Hand-written Database shape for the Supabase clients.
+ * `@supabase/supabase-js` v2's type inference requires every schema key
+ * (Views, Functions, Enums, CompositeTypes) to be present — otherwise
+ * `.from().select()` narrows to `never` on strict builds. Regenerate with
+ * `npm run db:types` when the schema changes for full accuracy.
+ */
 export interface Database {
   public: {
     Tables: {
-      profiles: { Row: Profile; Insert: Partial<Profile> & { id: string }; Update: Partial<Profile> };
+      profiles: {
+        Row: Profile;
+        Insert: Partial<Profile> & { id: string };
+        Update: Partial<Profile>;
+        Relationships: [];
+      };
       properties: {
         Row: Property;
         Insert: Omit<Property, "id" | "created_at" | "updated_at" | "view_count"> & { id?: string };
         Update: Partial<Property>;
+        Relationships: [];
       };
       media: {
         Row: Media;
         Insert: Omit<Media, "id" | "created_at"> & { id?: string };
         Update: Partial<Media>;
+        Relationships: [];
       };
       inquiries: {
         Row: Inquiry;
         Insert: Omit<Inquiry, "id" | "created_at" | "handled"> & { id?: string; handled?: boolean };
         Update: Partial<Inquiry>;
+        Relationships: [];
       };
       property_views: {
         Row: { id: string; property_id: string; session_id: string; user_id: string | null; viewed_at: string };
         Insert: { property_id: string; session_id: string; user_id?: string | null };
-        Update: never;
+        Update: Partial<{ id: string; property_id: string; session_id: string; user_id: string | null; viewed_at: string }>;
+        Relationships: [];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: {
+      property_type: PropertyType;
+      listing_type: ListingType;
+      property_status: PropertyStatus;
+      user_role: UserRole;
+      media_type: MediaType;
+    };
+    CompositeTypes: Record<string, never>;
   };
 }
