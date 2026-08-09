@@ -1,11 +1,34 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase/client";
 import { Logo } from "@/components/Logo";
 
+/**
+ * Outer wrapper: Next 15+ requires useSearchParams() to sit inside a Suspense
+ * boundary so the build can prerender the shell before hydrating the client
+ * portion that reads the URL.
+ */
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginShell />}>
+      <LoginInner />
+    </Suspense>
+  );
+}
+
+function LoginShell() {
+  return (
+    <div className="min-h-[80vh] flex items-center justify-center px-6">
+      <div className="w-full max-w-sm flex justify-center">
+        <Logo />
+      </div>
+    </div>
+  );
+}
+
+function LoginInner() {
   const router = useRouter();
   const params = useSearchParams();
   const redirect = params.get("redirect") ?? "/admin";
